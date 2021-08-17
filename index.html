@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FUEL GAME</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>FUEL GAME</h1>
+    </header>
+    <div id="game">
+      <div class="container">
+        <section id="fuel" class="container">
+          <h2>Fuel</h2>
+          <div class="bar">
+            <div class="bar_value" :style="fuelBarStatus"></div>
+          </div>
+        </section>
+        <section id="distance" class="container">
+          <h2>Distance</h2>
+          <div class="bar">
+            <div class="bar_value" :style="distanceBarStatus"></div>
+          </div>
+        </section>
+        <section class="container" v-if="winner">
+          <h2 v-if="winner === 'loser'">You lost!</h2>
+          <h2 v-else-if="winner === 'winner'">You won!</h2>
+          <h2 v-else>It's a draw!</h2>
+          <button @click="startGame" id="start_again">Start New Game</button>
+        </section>
+        <section id="controls" v-else>
+          <button @click="fuelConsume">Let's Go</button>
+          <button @click="goingFaster">Go Faster</button>
+          <button @click="getFuel" :disabled="getJustSomeFuel">
+            Get Fuel ( 3 Times )
+          </button>
+          <button @click="burnAll">Burn All !</button>
+        </section>
+      </div>
+      <div class="container">
+        <section id="log" class="container">
+          <h3>
+            <span class="win">Win : {{winNumber}}</span> |
+            <span class="lost">Lost : {{lostNumber}}</span>
+          </h3>
+          <h2 v-if="results.length > 0">Scores</h2>
+          <ul>
+            <li v-for="result in results">
+              <span class="win">Distance : {{result.distanceVal}} Km</span> |
+              <span class="lost">Fuel : {{result.fuelVal}} Liter</span>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
